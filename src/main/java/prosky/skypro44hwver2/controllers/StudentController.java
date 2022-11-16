@@ -18,21 +18,22 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping(path ="/{studentName}/{studentAge}")// Create
-    public Student createStudent(@PathVariable String studentName,
-                                 @PathVariable int studentAge) {
+    @PostMapping(path ="/create")// Create
+    @ResponseBody
+    public Student createStudent(@RequestParam("name") String studentName,
+                                 @RequestParam("age") int studentAge) {
         return studentService.create(studentName, studentAge);
     }
 
-    @PostMapping(path = "/{studentId}") // Read
+    @GetMapping(path = "/{studentId}") // Read
     public Student readStudent(@PathVariable Long studentId) {
         return studentService.read(studentId);
     }
 
-    @PutMapping(path = "/{studentId}/{studentName}/{studentAge}") // Update
-    public Student updateStudent(@PathVariable Long studentId,
-                                 @PathVariable String studentName,
-                                 @PathVariable int studentAge) {
+    @PutMapping(path = "/update") // Update
+    public Student updateStudent(@RequestParam("id") Long studentId,
+                                 @RequestParam("name") String studentName,
+                                 @RequestParam("age") int studentAge) {
         return studentService.update(studentId, studentName, studentAge);
     }
 
@@ -42,12 +43,12 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/age/{studentAge}")
+    @GetMapping(path = "/age/{studentAge}")
     public Collection<Student> findStudent(@PathVariable int studentAge) {
         return studentService.findByAge(studentAge);
     }
 
-    @PostMapping(path = "/age/{studentMinAge}/{studentMaxAge}")
+    @GetMapping(path = "/age/{studentMinAge}/{studentMaxAge}")
     public Collection<Student> findStudent(@PathVariable int studentMinAge,
                                            @PathVariable int studentMaxAge) {
         return studentService.findByAgeBetween(studentMinAge, studentMaxAge);

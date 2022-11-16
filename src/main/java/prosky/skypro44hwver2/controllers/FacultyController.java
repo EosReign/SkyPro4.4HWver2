@@ -18,21 +18,22 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @PostMapping(path ="/{facultyName}/{facultyColor}")// Create
-    public Faculty createFaculty(@PathVariable String facultyName,
-                                 @PathVariable String facultyColor) {
+    @PostMapping(path ="/create")// Create
+    @ResponseBody
+    public Faculty createFaculty(@RequestParam("name") String facultyName,
+                                 @RequestParam("color") String facultyColor) {
         return facultyService.create(facultyName, facultyColor);
     }
 
-    @PostMapping(path = "/{facultyId}")// READ
+    @GetMapping(path = "/{facultyId}")// READ
     public Faculty readFaculty(@PathVariable Long facultyId) {
         return facultyService.read(facultyId);
     }
 
-    @PutMapping(path = "/{facultyId}/{facultyName}/{facultyColor}") //UPDATE
-    public Faculty updateFaculty(@PathVariable Long facultyId,
-                                 @PathVariable String facultyName,
-                                 @PathVariable String facultyColor) {
+    @PutMapping(path = "/update") //UPDATE
+    public Faculty updateFaculty(@RequestParam("id") Long facultyId,
+                                 @RequestParam("name") String facultyName,
+                                 @RequestParam("color") String facultyColor) {
         return facultyService.update(facultyId, facultyName, facultyColor);
     }
 
@@ -42,12 +43,12 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/color/{facultyColor}")
+    @GetMapping(path = "/color/{facultyColor}")
     public Collection<Faculty> findFacultyByColor(@PathVariable String facultyColor) {
         return facultyService.findByFacultyColor(facultyColor);
     }
 
-    @PostMapping(path = "/name/{facultyName}")
+    @GetMapping(path = "/name/{facultyName}")
     public Collection<Faculty> findFacultyByName(@PathVariable String facultyName) {
         return facultyService.findByFacultyName(facultyName);
     }
